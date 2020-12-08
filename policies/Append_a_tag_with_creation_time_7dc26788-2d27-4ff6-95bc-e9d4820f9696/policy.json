@@ -1,0 +1,50 @@
+{
+ "properties": {
+  "displayName": "Append a tag with creation time",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "",
+  "metadata": {
+   "category": "Tags",
+   "createdBy": "3b7e5ade-77ac-4ee3-afb8-9afa73091e32",
+   "createdOn": "2020-07-15T21:34:47.4329465Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "tagName": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Tag Name",
+     "description": "Name of the tag, such as 'created'"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+     },
+     {
+      "field": "[concat('tags[', parameters('tagName'), ']')]",
+      "exists": "false"
+     }
+    ]
+   },
+   "then": {
+    "effect": "append",
+    "details": [
+     {
+      "field": "[concat('tags[', parameters('tagName'), ']')]",
+      "value": "[utcNow()]"
+     }
+    ]
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/MTCATLManagementGroupTop/providers/Microsoft.Authorization/policyDefinitions/7dc26788-2d27-4ff6-95bc-e9d4820f9696",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "7dc26788-2d27-4ff6-95bc-e9d4820f9696"
+}

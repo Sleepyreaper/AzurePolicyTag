@@ -1,0 +1,32 @@
+name: manage-azure-policy-6626617e
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'policies/Append_a_tag_with_creation_time_7dc26788-2d27-4ff6-95bc-e9d4820f9696/**'
+#      - .github/workflows/manage-azure-policy-6626617e.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_6626617e}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          policies/Append_a_tag_with_creation_time_7dc26788-2d27-4ff6-95bc-e9d4820f9696/**
